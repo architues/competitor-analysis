@@ -1,0 +1,145 @@
+.activity-feed-container {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.feed-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.feed-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.feed-badge {
+    background: var(--bg-canvas);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.feed-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-right: 4px;
+    /* Space for scrollbar */
+}
+
+.empty-feed {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    gap: 8px;
+    font-size: 0.9rem;
+    min-height: 200px;
+    opacity: 0.6;
+}
+
+.feed-item {
+    display: flex;
+    gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.feed-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.feed-icon-wrapper {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-canvas);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feed-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.feed-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feed-user-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.feed-time {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.feed-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin: 0;
+}
+
+.feed-target-badge {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 2px 8px;
+    background: var(--bg-canvas);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* Icon colors */
+.icon-blue {
+    color: var(--blue-500);
+}
+
+.icon-red {
+    color: var(--red-500);
+}
+
+.icon-green {
+    color: var(--emerald-500);
+}
+
+.icon-purple {
+    color: var(--violet-500);
+}
+
+.icon-gray {
+    color: var(--text-muted);
+}

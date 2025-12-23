@@ -1,0 +1,168 @@
+.export-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+    animation: fadeIn 0.2s ease-out;
+}
+
+.export-modal {
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    width: 450px;
+    max-width: 90vw;
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--border-subtle);
+    overflow: hidden;
+    animation: scaleUp 0.2s ease-out;
+}
+
+.export-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.export-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.export-content {
+    padding: 24px 20px;
+}
+
+.export-desc {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+.format-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.format-card {
+    background: var(--bg-canvas);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 16px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.format-card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+}
+
+.format-card.active {
+    border-color: var(--blue-500);
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.format-icon {
+    margin-bottom: 12px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.format-icon.pdf {
+    color: var(--red-500);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.format-icon.csv {
+    color: var(--emerald-500);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.format-icon.json {
+    color: var(--violet-500);
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.format-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.format-detail {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.export-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.download-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--blue-500);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.download-btn:hover:not(:disabled) {
+    background: var(--blue-600);
+}
+
+.download-btn:disabled {
+    opacity: 0.8;
+    cursor: default;
+}
+
+.download-btn.complete {
+    background: var(--emerald-500);
+}
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

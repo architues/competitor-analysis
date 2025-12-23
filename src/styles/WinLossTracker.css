@@ -1,0 +1,157 @@
+.winloss-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.winloss-header {
+    margin-bottom: 8px;
+}
+
+.winloss-chart {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+}
+
+.winloss-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.winloss-card {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.winloss-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.winloss-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.winloss-rate {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--emerald-500);
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.winloss-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.stat-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.stat-item-large {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px;
+    background: var(--bg-canvas);
+    border-radius: var(--radius-md);
+}
+
+.stat-item-large.wins {
+    border-left: 3px solid var(--emerald-500);
+}
+
+.stat-item-large.losses {
+    border-left: 3px solid var(--red-500);
+}
+
+.stat-value-large {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.deal-size {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    padding: 8px 12px;
+    background: var(--bg-canvas);
+    border-radius: var(--radius-md);
+}
+
+.win-reasons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.reasons-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.reasons-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.reasons-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.reasons-list li {
+    padding-left: 16px;
+    position: relative;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.reasons-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--emerald-500);
+    font-weight: bold;
+}
+
+.reasons-list.loss li::before {
+    content: '✗';
+    color: var(--red-500);
+}

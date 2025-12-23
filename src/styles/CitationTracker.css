@@ -1,0 +1,152 @@
+.citation-tracker-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.citation-header {
+    margin-bottom: 8px;
+}
+
+.citations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.citation-card {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.citation-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.source-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    flex: 1;
+}
+
+.source-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-app);
+    border-radius: var(--radius-md);
+    color: var(--color-primary);
+    flex-shrink: 0;
+}
+
+.source-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 4px;
+}
+
+.source-category {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.impact-badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+.impact-badge.impact-high {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--emerald-500);
+}
+
+.impact-badge.impact-medium {
+    background: rgba(251, 191, 36, 0.1);
+    color: var(--amber-500);
+}
+
+.impact-badge.impact-low {
+    background: rgba(100, 116, 139, 0.1);
+    color: var(--slate-500);
+}
+
+.citation-stats {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.stat-large {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-value-large {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1;
+}
+
+.stat-label-small {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.citation-insights {
+    padding: 24px;
+}
+
+.insight-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 16px;
+}
+
+.insight-list-compact {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.insight-list-compact li {
+    padding-left: 20px;
+    position: relative;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+.insight-list-compact li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+.insight-list-compact strong {
+    color: var(--text-main);
+    font-weight: 600;
+}

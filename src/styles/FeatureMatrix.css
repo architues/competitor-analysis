@@ -1,0 +1,119 @@
+.matrix-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.matrix-header {
+    margin-bottom: 8px;
+}
+
+.matrix-wrapper {
+    overflow-x: auto;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.feature-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+.feature-table th,
+.feature-table td {
+    padding: 16px 24px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: 0.9rem;
+}
+
+.feature-table th {
+    background: var(--bg-subtle);
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+}
+
+.feature-col {
+    width: 280px;
+    position: sticky;
+    left: 0;
+    background: var(--bg-subtle);
+    z-index: 2;
+    border-right: 1px solid var(--border-subtle);
+}
+
+.feature-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.competitor-col {
+    min-width: 160px;
+}
+
+.th-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.th-logo {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+}
+
+.info-icon {
+    color: var(--text-tertiary);
+    cursor: help;
+}
+
+.status-col {
+    text-align: center;
+    border-left: 1px solid transparent;
+    /* Align with header if needed */
+}
+
+/* Row hover effect */
+.feature-table tbody tr:hover td {
+    background: var(--bg-subtle);
+}
+
+/* Fix sticky column background on hover */
+.feature-table tbody tr:hover td.feature-col {
+    background: var(--bg-subtle);
+}
+
+/* Feature column needs background to hide scroll content */
+.feature-table td.feature-col {
+    background: var(--bg-surface);
+    border-right: 1px solid var(--border-subtle);
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.status-badge.yes {
+    color: var(--emerald-500);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.status-badge.no {
+    color: var(--text-tertiary);
+}

@@ -1,0 +1,138 @@
+.recommendations-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.recommendations-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.rec-summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.recommendations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.priority-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.priority-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.priority-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.priority-badge.priority-high {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--red-500);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.priority-badge.priority-medium {
+    background: rgba(251, 191, 36, 0.1);
+    color: var(--amber-500);
+    border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.priority-badge.priority-low {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--blue-500);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.priority-count {
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+}
+
+.rec-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+}
+
+.rec-card {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: all var(--transition-fast);
+}
+
+.rec-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
+}
+
+.rec-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rec-category {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.rec-action {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+.rec-impact {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.impact-label {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.impact-value {
+    font-size: 0.9rem;
+    color: var(--emerald-500);
+    font-weight: 600;
+}

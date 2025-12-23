@@ -1,0 +1,43 @@
+@import './variables.css';
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-canvas);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(23, 23, 23, 0.2);
+    border: 2px solid var(--bg-canvas);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(23, 23, 23, 0.3);
+}
