@@ -98,7 +98,19 @@ const AppContent = () => {
         setSelectedCompany(null); // Clear selected company when switching views
         setCurrentView(view);
       }} onBack={() => { }}>
-        {renderContent()}
+        {isLoading ? (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100%',
+            color: 'var(--text-secondary)'
+          }}>
+            Loading competitors...
+          </div>
+        ) : (
+          renderContent()
+        )}
       </Layout>
     </CollaborationProvider>
   );
