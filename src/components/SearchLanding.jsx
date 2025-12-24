@@ -17,7 +17,7 @@ const SearchLanding = ({ onSearch, recentSearches }) => {
             <div className="search-landing-content">
                 <div className="search-branding">
                     <div className="search-logo">⚡</div>
-                    <h1 className="search-title">CompetitorAI</h1>
+                    <h1 className="search-title">OkayReport</h1>
                     <p className="search-subtitle">Comprehensive competitive intelligence at your fingertips</p>
                 </div>
 

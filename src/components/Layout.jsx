@@ -68,8 +68,8 @@ const Layout = ({ children, currentView, onNavigate, onBack }) => {
         <div className="sidebar-header">
           {isSidebarOpen && (
             <div className="logo">
-              <span className="logo-icon">⚡</span>
-              <span className="logo-text">CompetitorAI</span>
+              <img src="/okayreport-icon.png" alt="OkayReport" className="logo-icon" style={{ width: '24px', height: '24px' }} />
+              <span className="logo-text">OkayReport</span>
             </div>
           )}
           <button className="toggle-btn" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>

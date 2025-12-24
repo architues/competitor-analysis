@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 // Pages/Components
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
+import OnboardingWizard from './components/Onboarding/OnboardingWizard';
 import Dashboard from './components/Dashboard';
 import CompetitorList from './components/CompetitorList';
 import Analysis from './components/Analysis';
@@ -99,6 +100,13 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+
+        {/* Protected Onboarding Route */}
+        <Route path="/onboarding" element={
+          <ProtectedRoute>
+            <OnboardingWizard />
+          </ProtectedRoute>
+        } />
 
         {/* Protected Dashboard Route */}
         <Route path="/" element={
