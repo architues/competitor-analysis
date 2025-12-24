@@ -7,7 +7,10 @@ import PresentationMode from './Presentation/PresentationMode';
 import { useCollaboration } from '../context/CollaborationContext';
 import '../styles/Layout.css';
 
+import { useNavigate } from 'react-router-dom';
+
 const Layout = ({ children, currentView, onNavigate, onBack }) => {
+  const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [showAlerts, setShowAlerts] = useState(false);
   const [showShare, setShowShare] = useState(false);
@@ -15,10 +18,31 @@ const Layout = ({ children, currentView, onNavigate, onBack }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const { unreadAlertCount } = useCollaboration();
 
+  const handleLogout = () => {
+    localStorage.removeItem('okayreport_token');
+    localStorage.removeItem('okayreport_ws');
+    navigate('/login');
+  };
+
   const handleUserNavigate = (view) => {
     onNavigate(view);
     setShowUserMenu(false);
   };
+  // ... (rest of code before the return)
+
+  // ... inside JSX ...
+  // Find the Log Out button and replace onClick:
+  // ...
+  <div className="dropdown-footer">
+    <button
+      className="dropdown-action"
+      style={{ color: 'var(--red-500)' }}
+      onClick={handleLogout}
+    >
+      <span>Log Out</span>
+    </button>
+  </div>
+  // ...
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -165,7 +189,11 @@ const Layout = ({ children, currentView, onNavigate, onBack }) => {
                       </button>
                     </div>
                     <div className="dropdown-footer">
-                      <button className="dropdown-action" style={{ color: 'var(--red-500)' }}>
+                      <button
+                        className="dropdown-action"
+                        style={{ color: 'var(--red-500)' }}
+                        onClick={handleLogout}
+                      >
                         <span>Log Out</span>
                       </button>
                     </div>

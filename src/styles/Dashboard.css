@@ -61,8 +61,45 @@
     color: var(--red-500);
 }
 
-.stat-period {
-    color: var(--text-tertiary);
+/* Dashboard Header & Search */
+.dashboard-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 24px;
+}
+
+.dashboard-search {
+    flex: 1;
+    max-width: 600px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 0 12px;
+    transition: all 0.2s;
+}
+
+.dashboard-search:focus-within {
+    border-color: var(--blue-500);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.dashboard-search .search-icon {
+    color: var(--text-muted);
+}
+
+.dashboard-search input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    outline: none;
 }
 
 .dashboard-grid {
@@ -90,16 +127,73 @@
     color: var(--text-main);
 }
 
+/* Insights Grid (within panel) */
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+    padding: 16px;
+}
+
 .insights-list {
     list-style: none;
-    padding: 20px;
+    /* Legacy override */
+    padding: 0;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding: 0;
     margin: 0;
     overflow-y: auto;
     max-height: 100%;
+}
+
+/* Recent Analyses (Sidebar) */
+.recent-list-compact {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+}
+
+.recent-item-compact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.recent-item-compact:hover {
+    background: var(--bg-surface-hover);
+}
+
+.recent-icon-bg {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: var(--bg-canvas);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+}
+
+.recent-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.recent-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.recent-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
 }
 
 .insight-item {

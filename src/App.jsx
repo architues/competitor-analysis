@@ -1,35 +1,30 @@
 import { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { CollaborationProvider } from './context/CollaborationContext';
 import Layout from './components/Layout';
+import ProtectedRoute from './components/ProtectedRoute';
 
+// Pages/Components
+import Login from './components/Auth/Login';
+import Signup from './components/Auth/Signup';
 import Dashboard from './components/Dashboard';
 import CompetitorList from './components/CompetitorList';
 import Analysis from './components/Analysis';
 import FeatureMatrix from './components/FeatureMatrix';
 import Insights from './components/Insights';
-import SearchLanding from './components/SearchLanding';
 import CompanyDetail from './components/CompanyDetail';
 import SettingsLayout from './components/Settings/SettingsLayout';
-import { competitors as initialCompetitors, recentSearches } from './data/mockData';
+import { competitors as initialCompetitors } from './data/mockData';
 import './styles/index.css';
 
-
-// Placeholder components
-// Placeholder components declaration removed as handled by imports
-
-function App() {
-  const [hasSearched, setHasSearched] = useState(false);
+// Wrapper component to handle the inner logic (State + Routing)
+const AppContent = () => {
   const [currentView, setCurrentView] = useState('dashboard');
   const [competitors, setCompetitors] = useState(initialCompetitors);
   const [selectedCompany, setSelectedCompany] = useState(null);
 
-  const handleSearch = (query) => {
-    console.log("Searching for:", query);
-    setHasSearched(true);
-  };
-
+  // -- Handlers --
   const handleAddCompetitor = () => {
-    // Placeholder for add logic - will implement modal next
     const newComp = {
       id: Date.now(),
       name: `New Competitor ${competitors.length + 1}`,
@@ -46,15 +41,17 @@ function App() {
     setCompetitors(competitors.filter(c => c.id !== id));
   };
 
-  const handleViewCompany = (company) => {
-    setSelectedCompany(company);
-  };
-
-  const handleBackFromDetail = () => {
-    setSelectedCompany(null);
-  };
-
+  // -- Render Logic for "Main" App Areas --
   const renderContent = () => {
+    if (selectedCompany) {
+      return (
+        <CompanyDetail
+          company={selectedCompany}
+          onBack={() => setSelectedCompany(null)}
+        />
+      );
+    }
+
     switch (currentView) {
       case 'dashboard':
         return <Dashboard competitors={competitors} />;
@@ -64,7 +61,7 @@ function App() {
             competitors={competitors}
             onAdd={handleAddCompetitor}
             onDelete={handleDeleteCompetitor}
-            onViewCompany={handleViewCompany}
+            onViewCompany={setSelectedCompany}
           />
         );
       case 'analysis':
@@ -84,30 +81,36 @@ function App() {
     }
   };
 
-  if (!hasSearched) {
-    return (
-      <CollaborationProvider>
-        <SearchLanding onSearch={handleSearch} recentSearches={recentSearches} />
-      </CollaborationProvider>
-    );
-  }
-
-  if (selectedCompany) {
-    return (
-      <CollaborationProvider>
-        <Layout currentView={currentView} onNavigate={setCurrentView} onBack={() => setHasSearched(false)}>
-          <CompanyDetail company={selectedCompany} onBack={handleBackFromDetail} />
-        </Layout>
-      </CollaborationProvider>
-    );
-  }
-
   return (
     <CollaborationProvider>
-      <Layout currentView={currentView} onNavigate={setCurrentView} onBack={() => setHasSearched(false)}>
+      <Layout currentView={currentView} onNavigate={(view) => {
+        setSelectedCompany(null); // Clear selected company when switching views
+        setCurrentView(view);
+      }} onBack={() => { }}>
         {renderContent()}
       </Layout>
     </CollaborationProvider>
+  );
+};
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+
+        {/* Protected Dashboard Route */}
+        <Route path="/" element={
+          <ProtectedRoute>
+            <AppContent />
+          </ProtectedRoute>
+        } />
+
+        {/* Catch all - Redirect to Home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
