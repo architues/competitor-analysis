@@ -2,7 +2,7 @@ import { Folder, Search, Clock } from 'lucide-react';
 import React, { useState } from 'react';
 import '../styles/SearchLanding.css';
 
-const SearchLanding = ({ onSearch, recentSearches }) => {
+const SearchLanding = ({ onSearch, recentSearches = [] }) => {
     const [query, setQuery] = useState('');
 
     const handleSearch = (e) => {

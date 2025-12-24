@@ -25,6 +25,9 @@ const Dashboard = ({ competitors }) => {
     const [showExport, setShowExport] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
 
+    // Get recent searches from localStorage or use empty array
+    const recentSearches = JSON.parse(localStorage.getItem("okayreport_recent_searches") || "[]");
+
     // Calculate stats from real competitor data
     const totalMarketShare = competitors.reduce((acc, curr) => acc + (curr.market_share || 0), 0);
     const competitorCount = competitors.length;
