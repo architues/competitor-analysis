@@ -34,6 +34,17 @@ const Signup = () => {
             // Save workspace ID (only the ID, as a string)
             localStorage.setItem('okayreport_ws', String(data.defaultWorkspace.id));
 
+            // Fetch available workspaces
+            try {
+                const workspaces = await apiCall('/workspaces', 'GET');
+                if (Array.isArray(workspaces)) {
+                    localStorage.setItem('okayreport_workspaces', JSON.stringify(workspaces));
+                }
+            } catch (wsErr) {
+                console.error('Failed to fetch workspaces:', wsErr);
+                // Don't block signup if workspace fetch fails
+            }
+
             console.log('Signup Success:', data);
             navigate('/');
         } catch (err) {
