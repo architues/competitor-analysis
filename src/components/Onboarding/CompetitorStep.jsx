@@ -16,10 +16,12 @@ const CompetitorStep = ({ onComplete, onSkip }) => {
         try {
             const data = await apiCall('/competitors', 'GET');
             setCompetitors(Array.isArray(data) ? data : []);
+            setError(''); // Clear any previous errors on successful fetch
         } catch (err) {
             console.error('Failed to fetch competitors:', err);
-            // Don't show error for initial fetch - user might have none
+            // Silently fail for initial fetch - user might have none or endpoint might not exist yet
             setCompetitors([]);
+            // Don't set error state here - only show errors for user actions
         }
     };
 
