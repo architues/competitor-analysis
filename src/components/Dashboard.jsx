@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { calculateInsights, recentSearches } from '../data/mockData';
 import { TrendingUp, Users, PieChart, Activity, Download, Search } from 'lucide-react';
 import ActivityFeed from './ActivityFeed';
 import InsightCard from './InsightCard';
@@ -23,10 +22,12 @@ const StatCard = ({ title, value, change, icon: Icon, color }) => (
 );
 
 const Dashboard = ({ competitors }) => {
-    const insights = calculateInsights();
-    const totalMarketShare = competitors.reduce((acc, curr) => acc + curr.marketShare, 0);
     const [showExport, setShowExport] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+
+    // Calculate stats from real competitor data
+    const totalMarketShare = competitors.reduce((acc, curr) => acc + (curr.market_share || 0), 0);
+    const competitorCount = competitors.length;
 
     return (
         <div className="dashboard-container">
@@ -98,42 +99,34 @@ const Dashboard = ({ competitors }) => {
             <div className="dashboard-grid">
                 {/* Main Content Column */}
                 <div className="dashboard-main-col">
-                    <div className="panel recent-activity">
-                        <div className="panel-header">
-                            <h3 className="panel-title">AI Insights</h3>
-                            <span className="badge-new">3 New</span>
-                        </div>
-                        <div className="insights-grid">
-                            {insights.map((insight) => (
-                                <InsightCard key={insight.id} insight={insight} />
-                            ))}
-                        </div>
-                    </div>
+                    {/* Removed AI Insights section - will be populated with real data later */}
 
                     <div className="panel top-competitors">
                         <div className="panel-header">
                             <h3 className="panel-title">Market Leaders</h3>
                         </div>
                         <div className="leaders-list">
-                            {competitors.sort((a, b) => b.marketShare - a.marketShare).map(comp => (
-                                <div key={comp.id} className="leader-item">
-                                    <div className="leader-info">
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                            <img src={comp.logo} alt={comp.name} className="leader-logo" />
-                                            <span className="leader-name">{comp.name}</span>
-                                        </div>
-                                    </div>
-                                    <div className="leader-share">
-                                        <div className="share-bar-bg">
-                                            <div
-                                                className="share-bar-fill"
-                                                style={{ width: `${comp.marketShare}%`, backgroundColor: comp.marketShare > 30 ? 'var(--blue-500)' : 'var(--violet-500)' }}
-                                            ></div>
-                                        </div>
-                                        <span className="share-text">{comp.marketShare}%</span>
-                                    </div>
+                            {competitors.length === 0 ? (
+                                <div style={{ padding: '20px', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                                    No competitors added yet
                                 </div>
-                            ))}
+                            ) : (
+                                competitors
+                                    .sort((a, b) => (b.market_share || 0) - (a.market_share || 0))
+                                    .slice(0, 5)
+                                    .map(comp => (
+                                        <div key={comp.id} className="leader-item">
+                                            <div className="leader-info">
+                                                <div className="leader-name">{comp.name}</div>
+                                                {comp.website && (
+                                                    <div className="leader-website" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                                                        {comp.website}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))
+                            )}
                         </div>
                     </div>
                 </div>
@@ -164,15 +157,15 @@ const Dashboard = ({ competitors }) => {
                         <ActivityFeed />
                     </div>
                 </div>
-            </div>
+            </div >
 
             {showExport && (
                 <ExportModal
-                    data={{ competitors, insights }}
+                    data={{ competitors }}
                     onClose={() => setShowExport(false)}
                 />
             )}
-        </div>
+        </div >
     );
 };
 

@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { CollaborationProvider } from './context/CollaborationContext';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+import { apiCall } from './utils/api';
 
 // Pages/Components
 import Login from './components/Auth/Login';
@@ -15,31 +16,41 @@ import FeatureMatrix from './components/FeatureMatrix';
 import Insights from './components/Insights';
 import CompanyDetail from './components/CompanyDetail';
 import SettingsLayout from './components/Settings/SettingsLayout';
-import { competitors as initialCompetitors } from './data/mockData';
 import './styles/index.css';
 
 // Wrapper component to handle the inner logic (State + Routing)
 const AppContent = () => {
   const [currentView, setCurrentView] = useState('dashboard');
-  const [competitors, setCompetitors] = useState(initialCompetitors);
+  const [competitors, setCompetitors] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // -- Handlers --
-  const handleAddCompetitor = () => {
-    const newComp = {
-      id: Date.now(),
-      name: `New Competitor ${competitors.length + 1}`,
-      logo: `https://ui-avatars.com/api/?name=New&background=random`,
-      marketShare: Math.floor(Math.random() * 20),
-      channels: { seo: 50, social: 50, ads: 50, email: 50 },
-      features: ["New Feature"],
-      recentActivity: "Just added"
-    };
-    setCompetitors([...competitors, newComp]);
+  // Fetch competitors from API on mount
+  useEffect(() => {
+    fetchCompetitors();
+  }, []);
+
+  const fetchCompetitors = async () => {
+    try {
+      const data = await apiCall('/competitors', 'GET');
+      setCompetitors(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error('Failed to fetch competitors:', err);
+      setCompetitors([]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleDeleteCompetitor = (id) => {
-    setCompetitors(competitors.filter(c => c.id !== id));
+  // -- Handlers --
+  const handleDeleteCompetitor = async (id) => {
+    try {
+      await apiCall(`/competitors/${id}`, 'DELETE');
+      // Refetch after delete
+      await fetchCompetitors();
+    } catch (err) {
+      console.error('Failed to delete competitor:', err);
+    }
   };
 
   // -- Render Logic for "Main" App Areas --
@@ -60,7 +71,6 @@ const AppContent = () => {
         return (
           <CompetitorList
             competitors={competitors}
-            onAdd={handleAddCompetitor}
             onDelete={handleDeleteCompetitor}
             onViewCompany={setSelectedCompany}
           />
