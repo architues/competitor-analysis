@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { apiCall } from '../../utils/api';
 
-const CompetitorStep = ({ onComplete, onSkip }) => {
+const CompetitorStep = ({ onComplete, onSkip, onCompetitorAdded }) => {
     const [formData, setFormData] = useState({ name: '', website: '' });
     const [competitors, setCompetitors] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -44,6 +44,11 @@ const CompetitorStep = ({ onComplete, onSkip }) => {
 
             // Refetch to get updated list from backend
             await fetchCompetitors();
+
+            // Notify parent to refresh its competitor list too
+            if (onCompetitorAdded) {
+                onCompetitorAdded();
+            }
 
             // Clear form
             setFormData({ name: '', website: '' });

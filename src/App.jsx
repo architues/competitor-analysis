@@ -94,24 +94,31 @@ const AppContent = () => {
 
   return (
     <CollaborationProvider>
-      <Layout currentView={currentView} onNavigate={(view) => {
-        setSelectedCompany(null); // Clear selected company when switching views
-        setCurrentView(view);
-      }} onBack={() => { }}>
-        {isLoading ? (
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '100%',
-            color: 'var(--text-secondary)'
-          }}>
-            Loading competitors...
-          </div>
-        ) : (
-          renderContent()
-        )}
-      </Layout>
+      <Routes>
+        <Route path="/onboarding" element={
+          <OnboardingWizard onCompetitorAdded={fetchCompetitors} />
+        } />
+        <Route path="/*" element={
+          <Layout currentView={currentView} onNavigate={(view) => {
+            setSelectedCompany(null); // Clear selected company when switching views
+            setCurrentView(view);
+          }} onBack={() => { }}>
+            {isLoading ? (
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100%',
+                color: 'var(--text-secondary)'
+              }}>
+                Loading competitors...
+              </div>
+            ) : (
+              renderContent()
+            )}
+          </Layout>
+        } />
+      </Routes>
     </CollaborationProvider>
   );
 };
@@ -123,22 +130,12 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        {/* Protected Onboarding Route */}
-        <Route path="/onboarding" element={
-          <ProtectedRoute>
-            <OnboardingWizard />
-          </ProtectedRoute>
-        } />
-
-        {/* Protected Dashboard Route */}
-        <Route path="/" element={
+        {/* Protected Routes with shared state */}
+        <Route path="/*" element={
           <ProtectedRoute>
             <AppContent />
           </ProtectedRoute>
         } />
-
-        {/* Catch all - Redirect to Home */}
-        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

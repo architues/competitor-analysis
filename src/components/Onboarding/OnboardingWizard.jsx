@@ -4,7 +4,7 @@ import WelcomeStep from './WelcomeStep';
 import CompetitorStep from './CompetitorStep';
 import '../../styles/Onboarding.css';
 
-const OnboardingWizard = () => {
+const OnboardingWizard = ({ onCompetitorAdded }) => {
     const [currentStep, setCurrentStep] = useState(1);
     const navigate = useNavigate();
 
@@ -37,6 +37,7 @@ const OnboardingWizard = () => {
                     <CompetitorStep
                         onComplete={handleComplete}
                         onSkip={handleSkip}
+                        onCompetitorAdded={onCompetitorAdded}
                     />
                 )}
             </div>
