@@ -1,36 +1,70 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TrendingUp, Users, PieChart, Activity, Download, Search } from 'lucide-react';
+import { apiCall } from '../utils/api';
 import ActivityFeed from './ActivityFeed';
 import InsightCard from './InsightCard';
 import ExportModal from './Share/ExportModal';
 import '../styles/Dashboard.css';
 
-const StatCard = ({ title, value, change, icon: Icon, color }) => (
+const StatCard = ({ title, value, change, icon: Icon, color, isLoading }) => (
     <div className="stat-card">
         <div className="stat-header">
             <Icon size={16} color={color} />
             <span>{title}</span>
         </div>
-        <div className="stat-value">{value}</div>
-        <div className="stat-footer">
-            <span className={`stat-change ${change.startsWith('+') ? 'positive' : 'negative'}`}>
-                {change}
-            </span>
-            <span className="stat-period">vs last month</span>
-        </div>
+        {isLoading ? (
+            <div className="stat-value" style={{ color: 'var(--text-tertiary)' }}>...</div>
+        ) : (
+            <>
+                <div className="stat-value">{value}</div>
+                {change && (
+                    <div className="stat-footer">
+                        <span className={`stat-change ${change.startsWith('+') ? 'positive' : 'negative'}`}>
+                            {change}
+                        </span>
+                        <span className="stat-period">vs last month</span>
+                    </div>
+                )}
+            </>
+        )}
     </div>
 );
 
 const Dashboard = ({ competitors }) => {
     const [showExport, setShowExport] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [stats, setStats] = useState(null);
+    const [statsLoading, setStatsLoading] = useState(true);
+    const [statsError, setStatsError] = useState(null);
 
     // Get recent searches from localStorage or use empty array
     const recentSearches = JSON.parse(localStorage.getItem("okayreport_recent_searches") || "[]");
 
-    // Calculate stats from real competitor data
-    const totalMarketShare = competitors.reduce((acc, curr) => acc + (curr.market_share || 0), 0);
-    const competitorCount = competitors.length;
+    // Fetch dashboard stats from API
+    useEffect(() => {
+        fetchStats();
+    }, []);
+
+    const fetchStats = async () => {
+        try {
+            setStatsLoading(true);
+            setStatsError(null);
+            const data = await apiCall('/dashboard/stats', 'GET');
+            setStats(data);
+        } catch (err) {
+            console.error('Failed to fetch dashboard stats:', err);
+            setStatsError(err.message);
+            // Set fallback stats so UI doesn't break
+            setStats({
+                total_competitors: competitors.length,
+                avg_market_visibility: 0,
+                industry_growth: 0,
+                active_campaigns: 0
+            });
+        } finally {
+            setStatsLoading(false);
+        }
+    };
 
     return (
         <div className="dashboard-container">
@@ -68,34 +102,52 @@ const Dashboard = ({ competitors }) => {
                 </button>
             </div>
 
+            {statsError && (
+                <div style={{
+                    padding: '12px',
+                    background: 'var(--red-50)',
+                    border: '1px solid var(--red-200)',
+                    borderRadius: '6px',
+                    color: 'var(--red-700)',
+                    fontSize: '0.875rem',
+                    marginBottom: '16px'
+                }}>
+                    Failed to load stats: {statsError}. Showing fallback data.
+                </div>
+            )}
+
             <div className="stats-grid">
                 <StatCard
                     title="Total Competitors"
-                    value={competitors.length}
-                    change="+1"
+                    value={stats?.total_competitors ?? competitors.length}
+                    change={stats?.total_competitors_change}
                     icon={Users}
                     color="#3b82f6"
+                    isLoading={statsLoading}
                 />
                 <StatCard
                     title="Avg Market Visibility"
-                    value={`${Math.round(totalMarketShare / competitors.length)}%`}
-                    change="+5%"
+                    value={stats?.avg_market_visibility ? `${stats.avg_market_visibility}%` : '0%'}
+                    change={stats?.avg_market_visibility_change}
                     icon={PieChart}
                     color="#8b5cf6"
+                    isLoading={statsLoading}
                 />
                 <StatCard
                     title="Industry Growth"
-                    value="18%"
-                    change="+2.4%"
+                    value={stats?.industry_growth ? `${stats.industry_growth}%` : '0%'}
+                    change={stats?.industry_growth_change}
                     icon={TrendingUp}
                     color="#10b981"
+                    isLoading={statsLoading}
                 />
                 <StatCard
                     title="Active Campaigns"
-                    value="12"
-                    change="-3"
+                    value={stats?.active_campaigns ?? 0}
+                    change={stats?.active_campaigns_change}
                     icon={Activity}
                     color="#f59e0b"
+                    isLoading={statsLoading}
                 />
             </div>
 
