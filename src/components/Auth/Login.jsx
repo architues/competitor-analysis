@@ -18,13 +18,20 @@ const Login = () => {
         try {
             const data = await apiCall('/auth/login', 'POST', { email, password });
 
-            // Save Tokens
-            if (data.token) localStorage.setItem('okayreport_token', data.token);
-            if (data.defaultWorkspace || data.workspace?.id) {
-                // Handle various response shapes gracefully
-                const wsId = data.defaultWorkspace || data.workspace?.id;
-                localStorage.setItem('okayreport_ws', wsId);
+            // Guard: Check for required data
+            if (!data.token) {
+                throw new Error('No authentication token received');
             }
+
+            if (!data.defaultWorkspace?.id) {
+                throw new Error('No workspace assigned. Please contact support.');
+            }
+
+            // Save token
+            localStorage.setItem('okayreport_token', data.token);
+
+            // Save workspace ID (only the ID, as a string)
+            localStorage.setItem('okayreport_ws', String(data.defaultWorkspace.id));
 
             console.log('Login Success:', data);
             navigate('/');
